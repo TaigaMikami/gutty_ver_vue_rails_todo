@@ -11,6 +11,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 
 group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
