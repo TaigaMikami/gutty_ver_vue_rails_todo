@@ -1,13 +1,13 @@
 <template>
-  <HelloWorld />
+  <Task />
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+  import Task from '../components/Task'
 
   export default {
     components: {
-      HelloWorld
+      Task
     }
   }
 </script>

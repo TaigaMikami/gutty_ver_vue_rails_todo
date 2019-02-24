@@ -3,14 +3,44 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const Task = {
+  nameSpaced: true,
   state: {
-
+    headers: [
+      {
+        text: 'Title',
+        value: 'title'
+      },
+      {
+        text: 'Status',
+        value: 'status'
+      }
+    ],
+    tasks: [
+      {
+        title: 'task1',
+        content: 'task1はオレンジを買ってくることです。',
+        status: 1
+      }
+    ]
   },
-  mutations: {
+  mutations: {},
+  actions: {},
+  getters: {
+    getHeaders (state) {
+      return state.headers
+    },
+    getTasks (state) {
+      return state.tasks
+    }
+  }
+}
 
-  },
-  actions: {
-
+export default new Vuex.Store({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {
+    Task
   }
 })
