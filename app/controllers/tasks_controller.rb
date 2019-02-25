@@ -3,7 +3,19 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = Task.where(status: :ready)
+
+    render json: @tasks
+  end
+
+  def index_doing
+    @tasks = Task.where(status: :doing)
+
+    render json: @tasks
+  end
+
+  def index_done
+    @tasks = Task.where(status: :done)
 
     render json: @tasks
   end
