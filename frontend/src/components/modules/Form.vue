@@ -1,11 +1,20 @@
 <template>
-  <v-form ref="form">
-    <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
-    <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
-    <v-btn fab dark color="success"  @click="createTask">
-      <v-icon dark>add</v-icon>
-    </v-btn>
-  </v-form>
+  <div class="todo-form">
+    <v-form ref="form">
+      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
+
+      <v-layout row>
+      <v-flex xs10 class="content">
+        <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
+      </v-flex>
+      <v-flex xs2 class="submit-btn">
+        <v-btn fab dark color="success"  @click="createTask">
+          <v-icon dark>add</v-icon>
+        </v-btn>
+      </v-flex>
+      </v-layout>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -34,8 +43,14 @@
   }
 </script>
 
-<style>
-  .v-form {
-    margin: 1% 4%;
+<style scoped>
+  .todo-form {
+    margin: 1% 7% 1% 3%;
+    padding: 1% 3%;
+    background-color: white;
+  }
+
+  .content ,.submit-btn {
+    margin: 0;
   }
 </style>
