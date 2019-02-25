@@ -1,29 +1,29 @@
 <template>
-  <v-container fluid>
-    <v-form ref="form">
-      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
-      <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
-      <v-btn fab dark color="success"  @click="createTask">
-        <v-icon dark>add</v-icon>
-      </v-btn>
-    </v-form>
-
-    <v-layout row>
-      <v-flex xs5>
-        <h2>Ready</h2>
-        <ReadyTask />
-      </v-flex>
-      <v-flex xs5>
-        <h2>Doing</h2>
-        <DoingTask />
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-data-table v-model="selected" :items="ready_tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
+    <template slot="headers" slot-scope="props">
+      <tr class="doing-tr">
+        <th>
+          <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
+        </th>
+        <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
+          <v-icon small>arrow_upward</v-icon>
+          {{ header.text }}
+        </th>
+      </tr>
+    </template>
+    <template slot="items" slot-scope="props">
+      <tr :active="props.selected" @click="props.selected = !props.selected">
+        <td>
+          <v-checkbox :input-value="props.selected" primary hide-details @click="doneTask(props.item.id)"></v-checkbox>
+        </td>
+        <td class="task-item">{{ props.item.title }}</td>
+        <td class="text-xs-right">{{ props.item.status }}</td>
+      </tr>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-  import ReadyTask from '@/components/modules/ReadyTask'
-  import DoingTask from '@/components/modules/DoingTask'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -64,7 +64,7 @@
         }
       },
       fetchTask () {
-        this.$axios.get('http://localhost:3000/tasks')
+        this.$axios.get('http://localhost:3000/doing_tasks')
           .then(response => {
             this.ready_tasks = response.data;
             console.log(response.data);
@@ -99,25 +99,12 @@
             console.log(reason);
           });
       }
-    },
-
-    components: {
-      ReadyTask,
-      DoingTask
     }
   }
 </script>
 
 <style>
-  .task-item {
-    text-align: center;
-  }
-
-  .flex {
-    margin: 0 3%;
-  }
-
-  .v-form {
-    margin: 1% 4%;
+  .doing-tr {
+    background-color: dodgerblue;
   }
 </style>
