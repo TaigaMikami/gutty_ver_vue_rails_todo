@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <v-form ref="form">
+      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
+      <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
+      <v-btn fab dark color="success"  @click="createTask">
+        <v-icon dark>add</v-icon>
+      </v-btn>
+    </v-form>
+
     <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr>
@@ -23,14 +31,6 @@
         </tr>
       </template>
     </v-data-table>
-
-    <v-form ref="form">
-      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
-      <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
-      <v-btn fab dark color="success"  @click="createTask">
-        <v-icon dark>add</v-icon>
-      </v-btn>
-    </v-form>
   </v-container>
 </template>
 
@@ -87,6 +87,7 @@
             console.log(response);
             this.newTask = '';
             this.newTaskContent = '';
+            location.reload();
           })
           .catch((reason) => {
             console.log(reason);
