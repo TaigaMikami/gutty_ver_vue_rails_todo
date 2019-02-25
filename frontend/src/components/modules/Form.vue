@@ -54,4 +54,10 @@
   .content ,.submit-btn {
     margin: 0;
   }
+
+  .v-btn {
+    position: absolute;
+    top: 200px;
+    left: 80%;
+  }
 </style>

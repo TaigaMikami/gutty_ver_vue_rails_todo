@@ -1,7 +1,14 @@
 <template>
   <div>
   <v-container>
-    <DoneTask />
+    <v-layout row>
+      <v-flex xs5>
+        <DoneTask />
+      </v-flex>
+      <v-flex xs5>
+        <DoneTask />
+      </v-flex>
+    </v-layout>
   </v-container>
   </div>
 </template>
