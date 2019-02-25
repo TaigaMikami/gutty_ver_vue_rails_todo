@@ -47,8 +47,9 @@
         if (this.selected.length) this.selected = [];
         else {
           this.selected = this.tasks.slice()
-          for(let id in this.selected) {
-            this.doneTask(id);
+          for(let i in this.selected) {
+            console.log(this.selected[i]);
+            this.moveDoingTask(this.selected[i].id);
           }
         }
       },
@@ -65,7 +66,6 @@
         this.$axios.get('http://localhost:3000/tasks')
           .then(response => {
             this.tasks = response.data;
-            console.log(response.data);
           })
           .catch((reason) => {
             console.log(reason);
@@ -75,7 +75,6 @@
       moveDoingTask (task_id) {
         this.$axios.put('http://localhost:3000/tasks/' + task_id, { task: { status: 1 }})
           .then(response => {
-            console.log(response);
             location.reload();
           })
           .catch((reason) => {
