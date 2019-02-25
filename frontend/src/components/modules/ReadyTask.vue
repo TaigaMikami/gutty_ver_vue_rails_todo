@@ -20,7 +20,11 @@
           </td>
           <td class="task-item">{{ props.item.title }}</td>
           <td class="text-xs-right">
-            <v-btn color="info">詳細</v-btn>
+            <router-link :to="`/tasks/${props.item.id}`">
+              <v-btn color="info">
+                詳細
+              </v-btn>
+            </router-link>
           </td>
         </tr>
       </template>

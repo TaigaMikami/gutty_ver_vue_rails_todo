@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Todo from './views/Todo.vue'
+import TodoDetail from './views/TodoDetail.vue'
 
 Vue.use(Router)
 
@@ -21,7 +22,13 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: function () { 
         return import(/* webpackChunkName: "about" */ './views/Done.vue')
-      }
-    }
+      },
+    },
+    {
+      path: '/tasks/:id',
+      name: 'todo_detail',
+      component: TodoDetail,
+      props: route => ({ id: Number(route.params.id) })
+    },
   ]
 })
