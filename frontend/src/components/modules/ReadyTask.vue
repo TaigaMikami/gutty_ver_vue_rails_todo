@@ -1,26 +1,29 @@
 <template>
-  <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
-    <template slot="headers" slot-scope="props">
-      <tr class="ready-tr">
-        <th>
-          <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
-        </th>
-        <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
-          <v-icon small>arrow_upward</v-icon>
-          {{ header.text }}
-        </th>
-      </tr>
-    </template>
-    <template slot="items" slot-scope="props">
-      <tr :active="props.selected" @click="props.selected = !props.selected">
-        <td>
-          <v-checkbox :input-value="props.selected" primary hide-details @click="moveDoingTask(props.item.id)"></v-checkbox>
-        </td>
-        <td class="task-item">{{ props.item.title }}</td>
-        <td class="text-xs-right">{{ props.item.status }}</td>
-      </tr>
-    </template>
-  </v-data-table>
+  <div>
+    <h2>Ready</h2>
+    <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
+      <template slot="headers" slot-scope="props">
+        <tr class="ready-tr">
+          <th>
+            <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
+          </th>
+          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
+            <v-icon small>arrow_upward</v-icon>
+            {{ header.text }}
+          </th>
+        </tr>
+      </template>
+      <template slot="items" slot-scope="props">
+        <tr :active="props.selected" @click="props.selected = !props.selected">
+          <td>
+            <v-checkbox :input-value="props.selected" primary hide-details @click="moveDoingTask(props.item.id)"></v-checkbox>
+          </td>
+          <td class="task-item">{{ props.item.title }}</td>
+          <td class="text-xs-right">{{ props.item.status }}</td>
+        </tr>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>

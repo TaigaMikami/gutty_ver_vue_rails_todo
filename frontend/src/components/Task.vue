@@ -3,11 +3,9 @@
     <Form />
     <v-layout row>
       <v-flex xs5>
-        <h2>Ready</h2>
         <ReadyTask />
       </v-flex>
       <v-flex xs5>
-        <h2>Doing</h2>
         <DoingTask />
       </v-flex>
     </v-layout>
