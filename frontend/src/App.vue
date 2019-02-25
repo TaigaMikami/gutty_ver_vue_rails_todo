@@ -1,9 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app>
-        <router-link to="/">Todo</router-link> |
-        <router-link to="/done">Done</router-link>
-    </v-toolbar>
+    <Head />
     <v-content>
       <router-view/>
     </v-content>
@@ -11,15 +8,17 @@
 </template>
 
 <script>
+  import Head from '@/components/Head'
 
-export default {
-  name: 'App',
-  components: {
-  },
-  data () {
-    return {
-      //
+  export default {
+    name: 'App',
+    components: {
+      Head
+    },
+    data () {
+      return {
+        //
+      }
     }
   }
-}
 </script>
