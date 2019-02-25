@@ -1,13 +1,6 @@
 <template>
   <v-container fluid>
-    <v-form ref="form">
-      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
-      <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
-      <v-btn fab dark color="success"  @click="createTask">
-        <v-icon dark>add</v-icon>
-      </v-btn>
-    </v-form>
-
+    <Form />
     <v-layout row>
       <v-flex xs5>
         <h2>Ready</h2>
@@ -24,6 +17,7 @@
 <script>
   import ReadyTask from '@/components/modules/ReadyTask'
   import DoingTask from '@/components/modules/DoingTask'
+  import Form from '@/components/modules/Form'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -34,8 +28,6 @@
       },
       selected: [],
       ready_tasks: [],
-      newTask: '',
-      newTaskContent: ''
     }),
     computed: mapGetters({
       headers: 'getHeaders'
@@ -74,21 +66,6 @@
           });
       },
 
-      createTask () {
-        if (!this.newTask) return;
-
-        this.$axios.post('http://localhost:3000/tasks', { task: { title: this.newTask, content: this.newTaskContent, status: 0 }})
-          .then(response => {
-            console.log(response);
-            this.newTask = '';
-            this.newTaskContent = '';
-            location.reload();
-          })
-          .catch((reason) => {
-            console.log(reason);
-          });
-      },
-
       doneTask (task_id) {
         this.$axios.put('http://localhost:3000/tasks/' + task_id, { task: { status: 2 }})
           .then(response => {
@@ -103,7 +80,8 @@
 
     components: {
       ReadyTask,
-      DoingTask
+      DoingTask,
+      Form
     }
   }
 </script>
@@ -115,9 +93,5 @@
 
   .flex {
     margin: 0 3%;
-  }
-
-  .v-form {
-    margin: 1% 4%;
   }
 </style>
