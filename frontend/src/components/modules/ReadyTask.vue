@@ -1,5 +1,5 @@
 <template>
-  <v-data-table v-model="selected" :items="ready_tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
+  <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
     <template slot="headers" slot-scope="props">
       <tr class="ready-tr">
         <th>
@@ -14,7 +14,7 @@
     <template slot="items" slot-scope="props">
       <tr :active="props.selected" @click="props.selected = !props.selected">
         <td>
-          <v-checkbox :input-value="props.selected" primary hide-details @click="doneTask(props.item.id)"></v-checkbox>
+          <v-checkbox :input-value="props.selected" primary hide-details @click="moveDoingTask(props.item.id)"></v-checkbox>
         </td>
         <td class="task-item">{{ props.item.title }}</td>
         <td class="text-xs-right">{{ props.item.status }}</td>
@@ -33,9 +33,7 @@
         sortBy: 'title'
       },
       selected: [],
-      ready_tasks: [],
-      newTask: '',
-      newTaskContent: ''
+      tasks: [],
     }),
     computed: mapGetters({
       headers: 'getHeaders'
@@ -53,7 +51,6 @@
             this.doneTask(id);
           }
         }
-
       },
       changeSort (column) {
         if (this.pagination.sortBy === column) {
@@ -63,10 +60,11 @@
           this.pagination.descending = false
         }
       },
+
       fetchTask () {
         this.$axios.get('http://localhost:3000/tasks')
           .then(response => {
-            this.ready_tasks = response.data;
+            this.tasks = response.data;
             console.log(response.data);
           })
           .catch((reason) => {
@@ -74,22 +72,7 @@
           });
       },
 
-      createTask () {
-        if (!this.newTask) return;
-
-        this.$axios.post('http://localhost:3000/tasks', { task: { title: this.newTask, content: this.newTaskContent, status: 0 }})
-          .then(response => {
-            console.log(response);
-            this.newTask = '';
-            this.newTaskContent = '';
-            location.reload();
-          })
-          .catch((reason) => {
-            console.log(reason);
-          });
-      },
-
-      doneTask (task_id) {
+      moveDoingTask (task_id) {
         this.$axios.put('http://localhost:3000/tasks/' + task_id, { task: { status: 1 }})
           .then(response => {
             console.log(response);

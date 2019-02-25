@@ -1,5 +1,5 @@
 <template>
-  <v-data-table v-model="selected" :items="ready_tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
+  <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
     <template slot="headers" slot-scope="props">
       <tr class="doing-tr">
         <th>
@@ -33,9 +33,7 @@
         sortBy: 'title'
       },
       selected: [],
-      ready_tasks: [],
-      newTask: '',
-      newTaskContent: ''
+      tasks: [],
     }),
     computed: mapGetters({
       headers: 'getHeaders'
@@ -66,23 +64,8 @@
       fetchTask () {
         this.$axios.get('http://localhost:3000/doing_tasks')
           .then(response => {
-            this.ready_tasks = response.data;
+            this.tasks = response.data;
             console.log(response.data);
-          })
-          .catch((reason) => {
-            console.log(reason);
-          });
-      },
-
-      createTask () {
-        if (!this.newTask) return;
-
-        this.$axios.post('http://localhost:3000/tasks', { task: { title: this.newTask, content: this.newTaskContent, status: 0 }})
-          .then(response => {
-            console.log(response);
-            this.newTask = '';
-            this.newTaskContent = '';
-            location.reload();
           })
           .catch((reason) => {
             console.log(reason);
