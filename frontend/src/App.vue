@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-toolbar app>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
+        <router-link to="/">Todo</router-link> |
+        <router-link to="/done">Done</router-link>
     </v-toolbar>
     <v-content>
       <router-view/>

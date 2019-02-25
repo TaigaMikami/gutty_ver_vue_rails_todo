@@ -23,8 +23,7 @@
       <template slot="items" slot-scope="props">
         <tr :active="props.selected" @click="props.selected = !props.selected">
           <td>
-            <v-checkbox :input-value="props.selected" primary hide-details
-            ></v-checkbox>
+            <v-checkbox :input-value="props.selected" primary hide-details @click="doneTask(props.item.id)"></v-checkbox>
           </td>
           <td class="task-item">{{ props.item.title }}</td>
           <td class="text-xs-right">{{ props.item.status }}</td>
@@ -57,22 +56,28 @@
 
     methods: {
       toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.tasks.slice()
+        if (this.selected.length) this.selected = [];
+        else {
+          this.selected = this.tasks.slice()
+          for(let id in this.selected) {
+            this.doneTask(id);
+          }
+        }
+
       },
       changeSort (column) {
         if (this.pagination.sortBy === column) {
           this.pagination.descending = !this.pagination.descending
         } else {
-          this.pagination.sortBy = column
+          this.pagination.sortBy = column;
           this.pagination.descending = false
         }
       },
       fetchTask () {
         this.$axios.get('http://localhost:3000/tasks')
           .then(response => {
-            this.tasks = response.data
-            console.log(response.data)
+            this.tasks = response.data;
+            console.log(response.data);
           })
           .catch((reason) => {
             console.log(reason);
@@ -87,6 +92,17 @@
             console.log(response);
             this.newTask = '';
             this.newTaskContent = '';
+            location.reload();
+          })
+          .catch((reason) => {
+            console.log(reason);
+          });
+      },
+
+      doneTask (task_id) {
+        this.$axios.put('http://localhost:3000/tasks/' + task_id, { task: { status: 2 }})
+          .then(response => {
+            console.log(response);
             location.reload();
           })
           .catch((reason) => {
