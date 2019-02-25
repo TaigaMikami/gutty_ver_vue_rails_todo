@@ -1,30 +1,12 @@
 <template>
   <v-container>
-    <v-data-table
-      v-model="selected"
-      :items="tasks"
-      :pagination.sync="pagination"
-      select-all
-      item-key="title"
-      class="elevation-1"
-    >
+    <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr>
           <th>
-            <v-checkbox
-              :input-value="props.all"
-              :indeterminate="props.indeterminate"
-              primary
-              hide-details
-              @click.stop="toggleAll"
-            ></v-checkbox>
+            <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
           </th>
-          <th
-            v-for="header in headers"
-            :key="header.text"
-            :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-            @click="changeSort(header.value)"
-          >
+          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
             <v-icon small>arrow_upward</v-icon>
             {{ header.text }}
           </th>
@@ -33,10 +15,7 @@
       <template slot="items" slot-scope="props">
         <tr :active="props.selected" @click="props.selected = !props.selected">
           <td>
-            <v-checkbox
-              :input-value="props.selected"
-              primary
-              hide-details
+            <v-checkbox :input-value="props.selected" primary hide-details
             ></v-checkbox>
           </td>
           <td class="task-item">{{ props.item.title }}</td>
@@ -44,6 +23,14 @@
         </tr>
       </template>
     </v-data-table>
+
+    <v-form ref="form">
+      <v-text-field v-model="newTask" :counter="30" label="Title" required></v-text-field>
+      <v-textarea v-model="newTaskContent" label="Content"></v-textarea>
+      <v-btn fab dark color="success"  @click="createTask">
+        <v-icon dark>add</v-icon>
+      </v-btn>
+    </v-form>
   </v-container>
 </template>
 
@@ -58,19 +45,14 @@
       },
       selected: [],
       tasks: [],
+      newTask: '',
+      newTaskContent: ''
     }),
     computed: mapGetters({
       headers: 'getHeaders'
     }),
     mounted() {
-      this.$axios.get('http://localhost:3000/tasks')
-        .then(response => {
-          this.tasks = response.data
-          console.log(response.data)
-        })
-        .catch((reason) => {
-          console.log(reason);
-        });
+      this.fetchTask();
     },
 
     methods: {
@@ -85,6 +67,30 @@
           this.pagination.sortBy = column
           this.pagination.descending = false
         }
+      },
+      fetchTask () {
+        this.$axios.get('http://localhost:3000/tasks')
+          .then(response => {
+            this.tasks = response.data
+            console.log(response.data)
+          })
+          .catch((reason) => {
+            console.log(reason);
+          });
+      },
+
+      createTask () {
+        if (!this.newTask) return;
+
+        this.$axios.post('http://localhost:3000/tasks', { task: { title: this.newTask, content: this.newTaskContent, status: 1 }})
+          .then(response => {
+            console.log(response);
+            this.newTask = '';
+            this.newTaskContent = '';
+          })
+          .catch((reason) => {
+            console.log(reason);
+          });
       }
     }
   }
@@ -94,5 +100,4 @@
   .task-item {
     text-align: center;
   }
-
 </style>
