@@ -14,12 +14,14 @@
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr :active="props.selected" @click="props.selected = !props.selected">
-          <td>
+        <tr>
+          <td  :active="props.selected" @click="props.selected = !props.selected">
             <v-checkbox :input-value="props.selected" primary hide-details @click="doneTask(props.item.id)"></v-checkbox>
           </td>
           <td class="task-item">{{ props.item.title }}</td>
-          <td class="text-xs-right">{{ props.item.status }}</td>
+          <td class="text-xs-right">
+            <v-btn color="info">詳細</v-btn>
+          </td>
         </tr>
       </template>
     </v-data-table>

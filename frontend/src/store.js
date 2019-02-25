@@ -12,8 +12,8 @@ const Task = {
         value: 'title'
       },
       {
-        text: 'Status',
-        value: 'status'
+        text: 'Detail',
+        value: 'detail'
       }
     ],
     tasks: [
