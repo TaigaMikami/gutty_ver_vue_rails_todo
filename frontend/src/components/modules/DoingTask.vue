@@ -22,7 +22,7 @@
           <td class="text-xs-right">
             <router-link :to="`/tasks/${props.item.id}`">
               <v-btn color="info">
-                詳細
+                詳細<v-icon right>info</v-icon>
               </v-btn>
             </router-link>
           </td>
