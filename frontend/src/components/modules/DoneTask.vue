@@ -4,8 +4,8 @@
     <v-data-table v-model="selected" :items="tasks" :pagination.sync="pagination" select-all item-key="title" class="elevation-1">
       <template slot="headers" slot-scope="props">
         <tr class="done-tr">
-          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
-            <v-icon small>arrow_upward</v-icon>
+          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)" class="th-color">
+            <v-icon small class="th-color">arrow_upward</v-icon>
             {{ header.text }}
           </th>
         </tr>

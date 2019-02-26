@@ -27,4 +27,8 @@
   a{
     text-decoration: none;
   }
+
+  .th-color {
+    color: white !important;
+  }
 </style>

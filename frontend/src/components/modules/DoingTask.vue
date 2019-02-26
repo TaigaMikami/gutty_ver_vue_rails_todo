@@ -7,8 +7,8 @@
           <th>
             <v-checkbox :input-value="props.all" :indeterminate="props.indeterminate" primary hide-details @click.stop="toggleAll"></v-checkbox>
           </th>
-          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)">
-            <v-icon small>arrow_upward</v-icon>
+          <th v-for="header in headers" :key="header.text" :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']" @click="changeSort(header.value)" class="th-color">
+            <v-icon small class="th-color">arrow_upward</v-icon>
             {{ header.text }}
           </th>
         </tr>
